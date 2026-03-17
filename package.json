@@ -1,0 +1,27 @@
+{
+  "name": "rare-protocol-mcp-server",
+  "version": "0.1.0",
+  "description": "MCP server for the RARE Protocol — deploy NFT contracts, mint tokens, and run auctions from any MCP-compatible AI client",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "keywords": ["mcp", "superrare", "nft", "ethereum", "rare-protocol"],
+  "author": "DECONSTRUCT LAB",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "bin": {
+    "rare-protocol-mcp-server": "dist/index.js"
+  }
+}
