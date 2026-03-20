@@ -1,0 +1,170 @@
+{
+  "name": "DECONSTRUCT AGENT",
+  "version": "0.1.0",
+  "description": "An MCP server that wraps the entire RARE Protocol CLI surface as structured AI tools, enabling any AI agent to deploy ERC-721 contracts, mint NFTs with IPFS media, and run auctions on SuperRare autonomously via natural language.",
+  "operator": {
+    "name": "DECONSTRUCT LAB",
+    "wallet": "0x9F35AF4727FB91114563D8A8f779A792cB557f3f",
+    "url": "https://superrare.com/deconstruct",
+    "contact": "info@deconstruct-lab.net"
+  },
+  "identity": {
+    "erc8004": {
+      "chain": "base-mainnet",
+      "registrationTx": "0x1ab9054bf5a377361f7caf69931f7df59bde733b08968fafab594639881a2994",
+      "participantId": "3e514baec5c9441db0dbae7281ca5c8b",
+      "walletAddress": "0x9F35AF4727FB91114563D8A8f779A792cB557f3f",
+      "custodyType": "self_custody"
+    }
+  },
+  "framework": {
+    "type": "mcp-server",
+    "transport": "stdio",
+    "language": "typescript",
+    "runtime": "node22",
+    "repository": "https://github.com/Deconstruct2021/rare-protocol-mcp-server"
+  },
+  "tools": [
+    {
+      "name": "rare_configure_show",
+      "description": "Show wallet and RPC configuration",
+      "readOnly": true,
+      "onChain": false
+    },
+    {
+      "name": "rare_wallet_address",
+      "description": "Get configured wallet address",
+      "readOnly": true,
+      "onChain": false
+    },
+    {
+      "name": "rare_deploy_contract",
+      "description": "Deploy ERC-721 collection contract via RARE Protocol factory",
+      "readOnly": false,
+      "onChain": true,
+      "chains": ["mainnet", "sepolia"]
+    },
+    {
+      "name": "rare_import_contract",
+      "description": "Import existing ERC-721 contract into RARE Protocol registry",
+      "readOnly": false,
+      "onChain": true,
+      "chains": ["mainnet", "sepolia"]
+    },
+    {
+      "name": "rare_mint_nft",
+      "description": "Mint NFT with IPFS media upload or pre-built token URI",
+      "readOnly": false,
+      "onChain": true,
+      "chains": ["mainnet", "sepolia"]
+    },
+    {
+      "name": "rare_auction_create",
+      "description": "Create reserve price auction on SuperRareBazaar",
+      "readOnly": false,
+      "onChain": true,
+      "chains": ["mainnet", "sepolia"]
+    },
+    {
+      "name": "rare_auction_bid",
+      "description": "Place bid on running auction",
+      "readOnly": false,
+      "onChain": true,
+      "chains": ["mainnet", "sepolia"]
+    },
+    {
+      "name": "rare_auction_settle",
+      "description": "Settle completed auction",
+      "readOnly": false,
+      "onChain": true,
+      "chains": ["mainnet", "sepolia"]
+    },
+    {
+      "name": "rare_auction_cancel",
+      "description": "Cancel auction with no bids",
+      "readOnly": false,
+      "onChain": true,
+      "chains": ["mainnet", "sepolia"]
+    },
+    {
+      "name": "rare_auction_status",
+      "description": "Check current auction state (read-only)",
+      "readOnly": true,
+      "onChain": true,
+      "chains": ["mainnet", "sepolia", "base", "base-sepolia", "arbitrum", "optimism", "zora"]
+    },
+    {
+      "name": "rare_search_tokens",
+      "description": "Search NFTs via RARE Protocol API",
+      "readOnly": true,
+      "onChain": false
+    },
+    {
+      "name": "rare_search_auctions",
+      "description": "Search auctions by state via RARE Protocol API",
+      "readOnly": true,
+      "onChain": false
+    },
+    {
+      "name": "rare_search_collections",
+      "description": "Search collections owned by wallet",
+      "readOnly": true,
+      "onChain": false
+    },
+    {
+      "name": "rare_status",
+      "description": "Query on-chain contract and token status",
+      "readOnly": true,
+      "onChain": true,
+      "chains": ["mainnet", "sepolia", "base", "base-sepolia", "arbitrum", "optimism", "zora"]
+    }
+  ],
+  "capabilities": {
+    "taskCategories": [
+      "nft-minting",
+      "contract-deployment",
+      "auction-management",
+      "on-chain-querying",
+      "ipfs-media-upload"
+    ],
+    "supportedChains": [
+      "mainnet",
+      "sepolia",
+      "base",
+      "base-sepolia",
+      "arbitrum",
+      "arbitrum-sepolia",
+      "optimism",
+      "optimism-sepolia",
+      "zora",
+      "zora-sepolia"
+    ],
+    "autonomyLevel": "semi-autonomous",
+    "requiresHumanApproval": false,
+    "computeConstraints": {
+      "maxConcurrentTools": 1,
+      "timeoutSeconds": 120,
+      "requiresLocalCli": true
+    }
+  },
+  "guardrails": [
+    "Always calls rare_configure_show before transactions to verify wallet and chain",
+    "Always calls rare_auction_status before settle or cancel",
+    "Defaults to sepolia testnet unless mainnet explicitly requested",
+    "Validates contract addresses match 0x + 40 hex chars before transacting",
+    "Reads error messages from failed transactions before retrying",
+    "Never proceeds with auction settle if auction has not ended"
+  ],
+  "hackathon": {
+    "event": "Synthesis Hackathon 2026",
+    "slug": "dcnstrct-agent-ee15",
+    "tracks": [
+      "SuperRare Partner Track",
+      "Agents With Receipts - ERC-8004",
+      "Let the Agent Cook - No Humans Required",
+      "Synthesis Open Track"
+    ],
+    "deadline": "2026-03-22",
+    "model": "claude-sonnet-4-6"
+  }
+}
